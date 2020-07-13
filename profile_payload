@@ -1,0 +1,8 @@
+export PATH=$PATH:$PWD
+ln -sf lrzip lrzunzip
+ln -sf lrztar lrzuntar
+ln -sf lrzip lrzcat
+ln -sf lrzip lrz
+./lrztar -z -L 9 -v -o teste.tar.lrz ./
+mkdir test
+./lrztar -d teste.tar.lrz -O ./test/ -f

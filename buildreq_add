@@ -1,0 +1,24 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+nasm
+nasm-bin
+linux-dev
+xz
+unzip
+bzip2
+bzip2-dev
+bzip2-staticdev
+autogen
+automake
+automake-dev
+gcc-dev
+glibc-staticdev
+glibc-dev
+lzo-dev
+lzo-staticdev
+pkg-config
+zlib-dev
+zlib-staticdev
+xz-dev
+lz4-dev
+zstd-dev
