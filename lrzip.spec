@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : lrzip
 Version  : 0.631
-Release  : 2
+Release  : 3
 URL      : file:///insilications/build/clearlinux/packages/lrzip/lrzip-v0.631.zip
 Source0  : file:///insilications/build/clearlinux/packages/lrzip/lrzip-v0.631.zip
 Summary  : lrzip compression library
@@ -32,10 +32,15 @@ BuildRequires : nasm
 BuildRequires : nasm-bin
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(bzip2)
+BuildRequires : pkgconfig(liblz4)
+BuildRequires : pkgconfig(liblzma)
+BuildRequires : pkgconfig(libzstd)
 BuildRequires : pkgconfig(zlib)
+BuildRequires : python3-core
 BuildRequires : unzip
 BuildRequires : xz
 BuildRequires : xz-dev
+BuildRequires : xz-staticdev
 BuildRequires : zlib-dev
 BuildRequires : zlib-staticdev
 BuildRequires : zstd-dev
@@ -108,17 +113,18 @@ cd %{_builddir}/lrzip-v0.631
 
 %build
 ## build_prepend content
-find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-find . -type f -name 'libtool.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'configure*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name '*.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name '*.m4' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
+find . -type f -name 'config.status' -exec touch {} \;
 ## build_prepend end
 unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1594654449
+export SOURCE_DATE_EPOCH=1595097707
 export GCC_IGNORE_WERROR=1
 ## altflags_pgo content
 ## pgo generate
@@ -149,9 +155,10 @@ export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
 %autogen  --enable-static --enable-asm --enable-static-bin --disable-maintainer-mode
 ## make_prepend content
-find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'Makefile*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 #
-find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'config.status' -exec touch {} \;
 ## make_prepend end
 make  %{?_smp_mflags}  V=1 VERBOSE=1
 
@@ -163,7 +170,7 @@ ln -sf lrzip lrz
 ./lrztar -z -L 9 -v -o teste.tar.lrz ./
 mkdir test
 ./lrztar -d teste.tar.lrz -O ./test/ -f
-make distclean
+make clean
 export CFLAGS="${CFLAGS_USE}"
 export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
@@ -171,9 +178,10 @@ export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
 %autogen  --enable-static --enable-asm --enable-static-bin --disable-maintainer-mode
 ## make_prepend content
-find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'Makefile*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 #
-find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'libtool*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+find . -type f -name 'config.status' -exec touch {} \;
 ## make_prepend end
 make  %{?_smp_mflags}  V=1 VERBOSE=1
 
@@ -185,7 +193,7 @@ unset no_proxy
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1594654449
+export SOURCE_DATE_EPOCH=1595097707
 rm -rf %{buildroot}
 %make_install
 

@@ -2,4 +2,6 @@
 # not get picked up automatically. One name per line, no whitespace.
 zlib
 bzip2
-zlib
+liblzma
+liblz4
+libzstd

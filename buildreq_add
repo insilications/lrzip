@@ -3,11 +3,7 @@
 nasm
 nasm-bin
 linux-dev
-xz
 unzip
-bzip2
-bzip2-dev
-bzip2-staticdev
 autogen
 automake
 automake-dev
@@ -19,6 +15,12 @@ lzo-staticdev
 pkg-config
 zlib-dev
 zlib-staticdev
+xz
 xz-dev
+xz-staticdev
 lz4-dev
 zstd-dev
+python3-core
+bzip2
+bzip2-dev
+bzip2-staticdev
