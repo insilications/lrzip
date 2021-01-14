@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : lrzip
 Version  : 0.631
-Release  : 4
+Release  : 5
 URL      : file:///insilications/build/clearlinux/packages/lrzip/lrzip-v0.631.tar.gz
 Source0  : file:///insilications/build/clearlinux/packages/lrzip/lrzip-v0.631.tar.gz
 Summary  : lrzip compression library
@@ -22,6 +22,7 @@ BuildRequires : bzip2-dev
 BuildRequires : bzip2-staticdev
 BuildRequires : doxygen
 BuildRequires : gcc-dev
+BuildRequires : git
 BuildRequires : glibc-dev
 BuildRequires : glibc-staticdev
 BuildRequires : linux-dev
@@ -70,6 +71,8 @@ Requires: lrzip-lib = %{version}-%{release}
 Requires: lrzip-bin = %{version}-%{release}
 Provides: lrzip-devel = %{version}-%{release}
 Requires: lrzip = %{version}-%{release}
+Requires: lrzip-dev = %{version}-%{release}
+Requires: lrzip-dev32 = %{version}-%{release}
 
 %description dev
 dev components for the lrzip package.
@@ -104,6 +107,7 @@ man components for the lrzip package.
 Summary: staticdev components for the lrzip package.
 Group: Default
 Requires: lrzip-dev = %{version}-%{release}
+Requires: lrzip-dev32 = %{version}-%{release}
 
 %description staticdev
 staticdev components for the lrzip package.
@@ -127,7 +131,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1599675707
+export SOURCE_DATE_EPOCH=1610599389
 export GCC_IGNORE_WERROR=1
 ## altflags_pgo content
 ## pgo generate
@@ -151,15 +155,12 @@ export RANLIB=gcc-ranlib
 export NM=gcc-nm
 #export CCACHE_DISABLE=1
 ## altflags_pgo end
-##
-%define _lto_cflags 1
-##
 export CFLAGS="${CFLAGS_GENERATE}"
 export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
-%autogen --enable-static --enable-asm --enable-static-bin --disable-maintainer-mode
+%reconfigure --enable-static --enable-asm --enable-static-bin --disable-maintainer-mode
 ## make_prepend content
 #find . -type f -name 'Makefile*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 #
@@ -182,7 +183,7 @@ export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
-%autogen  --enable-static --enable-asm --enable-static-bin --disable-maintainer-mode
+%reconfigure --enable-static --enable-asm --enable-static-bin --disable-maintainer-mode
 ## make_prepend content
 #find . -type f -name 'Makefile*' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 #
@@ -201,7 +202,7 @@ export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1599675707
+export SOURCE_DATE_EPOCH=1610599389
 rm -rf %{buildroot}
 %make_install
 
