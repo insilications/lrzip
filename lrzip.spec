@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : lrzip
 Version  : 0.631
-Release  : 5
+Release  : 6
 URL      : file:///insilications/build/clearlinux/packages/lrzip/lrzip-v0.631.tar.gz
 Source0  : file:///insilications/build/clearlinux/packages/lrzip/lrzip-v0.631.tar.gz
 Summary  : lrzip compression library
@@ -71,8 +71,6 @@ Requires: lrzip-lib = %{version}-%{release}
 Requires: lrzip-bin = %{version}-%{release}
 Provides: lrzip-devel = %{version}-%{release}
 Requires: lrzip = %{version}-%{release}
-Requires: lrzip-dev = %{version}-%{release}
-Requires: lrzip-dev32 = %{version}-%{release}
 
 %description dev
 dev components for the lrzip package.
@@ -107,7 +105,6 @@ man components for the lrzip package.
 Summary: staticdev components for the lrzip package.
 Group: Default
 Requires: lrzip-dev = %{version}-%{release}
-Requires: lrzip-dev32 = %{version}-%{release}
 
 %description staticdev
 staticdev components for the lrzip package.
@@ -131,7 +128,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1610599389
+export SOURCE_DATE_EPOCH=1610881708
 export GCC_IGNORE_WERROR=1
 ## altflags_pgo content
 ## pgo generate
@@ -150,9 +147,9 @@ export FCFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall
 export FFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects -static-libstdc++ -static-libgcc $PGO_USE"
 export CXXFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -fPIC -ffat-lto-objects -static-libstdc++ -static-libgcc $PGO_USE"
 export LDFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects -static-libstdc++ -static-libgcc $PGO_USE"
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
+export AR=/usr/bin/gcc-ar
+export RANLIB=/usr/bin/gcc-ranlib
+export NM=/usr/bin/gcc-nm
 #export CCACHE_DISABLE=1
 ## altflags_pgo end
 export CFLAGS="${CFLAGS_GENERATE}"
@@ -202,7 +199,7 @@ export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1610599389
+export SOURCE_DATE_EPOCH=1610881708
 rm -rf %{buildroot}
 %make_install
 
